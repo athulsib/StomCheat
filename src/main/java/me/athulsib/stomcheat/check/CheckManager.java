@@ -1,33 +1,41 @@
 package me.athulsib.stomcheat.check;
 
-import me.athulsib.stomcheat.check.impl.movement.speed.SpeedA;
-import me.athulsib.stomcheat.check.impl.other.badpackets.BadPacketsA;
+import lombok.Getter;
 import me.athulsib.stomcheat.user.User;
+import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
+import org.reflections.util.ConfigurationBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class CheckManager {
 
-    public final List<Check> checks = new ArrayList<>();
+    @Getter
+    public final List<Class<? extends Check>> checkClasses = new ArrayList<>();
 
+    // yes im that lazy
     public void loadChecks() {
+        Reflections reflections = new Reflections(new ConfigurationBuilder()
+                .forPackage("me.athulsib.stomcheat.check.impl")
+                .addScanners(Scanners.SubTypes));
 
-        addCheck(new SpeedA());
-
-        addCheck(new BadPacketsA());
-    }
-
-    private void addCheck(Check check) {
-        this.checks.add(check);
+        Set<Class<? extends Check>> checkClassesSet = reflections.getSubTypesOf(Check.class);
+        checkClasses.addAll(checkClassesSet);
     }
 
     public void loadToPlayer(User user) {
-        wrapUser(user);
-        user.getChecks().addAll(this.checks);
-    }
-
-    public void wrapUser(User user) {
-        this.checks.forEach(check -> check.setUser(user));
+        List<Check> userChecks = new ArrayList<>();
+        for (Class<? extends Check> checkClass : checkClasses) {
+            try {
+                Check check = checkClass.getDeclaredConstructor().newInstance();
+                check.setUser(user);
+                userChecks.add(check);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        user.getChecks().addAll(userChecks);
     }
 }

@@ -39,7 +39,7 @@ public class ACInfoCommand extends Command {
             return;
         }
 
-        int checkCount = sc.getCheckManager() != null ? sc.getCheckManager().checks.size() : 0;
+        int checkCount = sc.getCheckManager() != null ? sc.getCheckManager().getCheckClasses().size() : 0;
         int userCount = sc.getUserManager() != null ? sc.getUserManager().getUserMap().size() : 0;
         ThreadManager tm = sc.getThreadManager();
         int threadCount = tm != null ? tm.getThreads() : 0;

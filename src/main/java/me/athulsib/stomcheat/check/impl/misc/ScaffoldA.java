@@ -35,7 +35,7 @@ public class ScaffoldA extends Check {
                 }
 
                 Point blockPosition = getUser().getPlayer().getTargetBlockPosition(5);
-                Block block = null;
+                //Block block = null;
 
                 if (blockPosition == null) {
                     if (++this.threshold > 10) {
@@ -43,10 +43,10 @@ public class ScaffoldA extends Check {
                     }
                 } else {
                     this.threshold -= Math.min(this.threshold, 0.5);
-                    block = getUser().getPlayer().getInstance().getBlock(blockPosition);
+                    //block = getUser().getPlayer().getInstance().getBlock(blockPosition);
                 }
 
-                System.out.println("ScaffoldA Threshold: " + this.threshold + " BlockPosition: " + blockPosition + " Block: " + (block == null ? "null" : block.name()));
+                //System.out.println("ScaffoldA Threshold: " + this.threshold + " BlockPosition: " + blockPosition + " Block: " + (block == null ? "null" : block.name()));
 
 
                 break;

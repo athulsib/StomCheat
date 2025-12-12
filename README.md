@@ -18,6 +18,7 @@ If you're searching for a real anticheat solution for your server, contact me @A
 
 ![img.png](assets/img.png)
 ![img.png](assets/scaffold.png)
+![img.png](assets/threads.png)
 
 
 ## Creating Checks

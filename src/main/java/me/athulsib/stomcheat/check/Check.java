@@ -53,7 +53,8 @@ public abstract class Check extends Event {
                 .replace("%check%", this.checkName)
                 .replace("%type%", this.checkType)
                 .replace("%vl%", String.valueOf(this.violations))
-                .replace("%punishvl%", String.valueOf(this.punishmentVL));
+                .replace("%punishvl%", String.valueOf(this.punishmentVL))
+                .replace("%experimental%", this.experimental ? StomCheat.getInstance().getConfig().getExperimental() : " ");
 
         String hoverTemplate = StomCheat.getInstance().getConfig().getHover()
                 .replace("%check%", this.checkName)
@@ -86,7 +87,7 @@ public abstract class Check extends Event {
         String kickMessage = StomCheat.getInstance().getConfig().getPunishKick();
 
 
-        getUser().getPlayer().kick(LegacyComponentSerializer.legacyAmpersand().deserialize(kickMessage));
+       // getUser().getPlayer().kick(LegacyComponentSerializer.legacyAmpersand().deserialize(kickMessage));
 
         StomCheat.getInstance().getUserManager().getUserMap().values().parallelStream().forEach(user ->
                 user.getPlayer().sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(String.format(broadcast, this.user.getUserName()))));

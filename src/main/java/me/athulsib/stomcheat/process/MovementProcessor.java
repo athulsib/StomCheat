@@ -9,6 +9,7 @@ import me.athulsib.stomcheat.utils.location.FlyingLocation;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.event.player.PlayerPacketEvent;
+import net.minestom.server.network.packet.client.play.ClientEntityActionPacket;
 
 @Getter
 @Setter
@@ -20,12 +21,14 @@ public class MovementProcessor extends Event {
     private FlyingLocation from = new FlyingLocation();
     private FlyingLocation fromFrom = new FlyingLocation();
     private FlyingWrapper lastflyingPacket;
+    private long lastSprintMillis;
+    private boolean sprinting;
 
     private double deltaX, deltaY, deltaZ, deltaXAbs, deltaZAbs, deltaYAbs, lastDeltaX, lastDeltaY, lastDeltaZ,
             lastDeltaXZ, lastDeltaYaw, lastDeltaPitch, lastDeltaYawAbs, lastDeltaPitchAbs,
             deltaXZ, deltaYaw, deltaPitch, deltaYawAbs, deltaPitchAbs;
 
-    private int tick;
+    private int tick, sprintTicks;
 
     public MovementProcessor(User user) {
         this.data = user;
@@ -117,8 +120,26 @@ public class MovementProcessor extends Event {
 
                 lastflyingPacket = flyingPacket;
                 ++this.tick;
+                if (sprinting) {
+                    ++this.sprintTicks;
+                } else {
+                    this.sprintTicks = 0;
+                }
                 break;
             }
+            case CLIENT_ENTITY_ACTION:
+                ClientEntityActionPacket packet = (ClientEntityActionPacket) event.getPacket();
+                switch (packet.action()) {
+                    case START_SPRINTING -> {
+                        sprinting = true;
+                        lastSprintMillis = System.currentTimeMillis();
+                    }
+                    case STOP_SPRINTING -> {
+                        sprinting = false;
+                    }
+                }
+                break;
         }
     }
+
 }

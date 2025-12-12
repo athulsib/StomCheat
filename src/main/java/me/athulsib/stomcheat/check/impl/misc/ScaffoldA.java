@@ -25,8 +25,12 @@ public class ScaffoldA extends Check {
     @Override
     public void onPacket(PlayerPacketEvent event) {
         switch (PacketUtil.toPacketReceive(event)) {
-            case CLIENT_BLOCK_PLACE: {
+            case CLIENT_LOOK:
+            case CLIENT_POSITION:
+            case CLIENT_POSITION_LOOK:
                 this.exemptTeleportTicks -= Math.min(this.exemptTeleportTicks, 1);
+                break;
+            case CLIENT_BLOCK_PLACE: {
                 if (this.exemptTeleportTicks > 0
                         || getUser().getPlayer().isAllowFlying()
                         || getUser().getPlayer().getGameMode() != GameMode.SURVIVAL) {
@@ -35,7 +39,6 @@ public class ScaffoldA extends Check {
                 }
 
                 Point blockPosition = getUser().getPlayer().getTargetBlockPosition(5);
-                //Block block = null;
 
                 if (blockPosition == null) {
                     if (++this.threshold > 10) {
@@ -43,28 +46,10 @@ public class ScaffoldA extends Check {
                     }
                 } else {
                     this.threshold -= Math.min(this.threshold, 0.5);
-                    //block = getUser().getPlayer().getInstance().getBlock(blockPosition);
                 }
-
-                //System.out.println("ScaffoldA Threshold: " + this.threshold + " BlockPosition: " + blockPosition + " Block: " + (block == null ? "null" : block.name()));
-
-
                 break;
             }
         }
     }
 
-    @Override
-    public void onPacket(PlayerPacketOutEvent event) {
-        switch (PacketUtil.toPacketSend(event)) {
-
-            case SERVER_POSITION: {
-
-                //bad way to exempt, not spoon-feeding you code.
-                this.exemptTeleportTicks = 20;
-
-                break;
-            }
-        }
-    }
 }

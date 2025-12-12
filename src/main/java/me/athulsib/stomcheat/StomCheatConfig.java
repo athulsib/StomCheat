@@ -8,7 +8,8 @@ import lombok.Setter;
 public class StomCheatConfig {
     private int threadCount = Math.min(Runtime.getRuntime().availableProcessors(), 16);
 
-    private String alert = "&6&lStomCheat &7&o>> &6%player% &fhas failed &6%check% %type% &8[VL:&r%vl% &7/ %punishvl% &8]";
+    private String alert = "&6&lStomCheat &7&o>> &6%player% &fhas failed &6%check% %type% &8[VL:&r%vl%&7/%punishvl%&8] %experimental%";
+    private String experimental = "&c(DEV)";
 
     private String hover =
             """

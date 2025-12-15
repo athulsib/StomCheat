@@ -23,6 +23,16 @@ If you're searching for a real anticheat solution for your server, contact me @A
 
 ## Creating Checks
 To create a check, simply create a class that extends `Check` and annotate it with `@CheckData`. Then override the `onPacket` method to handle incoming or outgoing packets.
+After you've created your check, make sure to register it with the 'CheckManager' like so:
+
+```java
+StomCheat stomCheat = /*your stomcheat insance*/
+
+// method A, register a check by its class  
+stomCheat.getCheckManager().registerCheck(BadPacketsA.class); // register the check class
+// method B, register all checks from a package
+stomCheat.getCheckManager().registerChecksFromPackage("com.example.ac.checks.impl"); // register all checks from a package
+```
 Here is an example of a simple check that detects impossible pitch rotations from the client:
 ```java
 @CheckData(

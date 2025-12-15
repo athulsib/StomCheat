@@ -1,6 +1,7 @@
 package me.athulsib.stomcheat.check;
 
 import lombok.Getter;
+import me.athulsib.stomcheat.config.ACConfig;
 import me.athulsib.stomcheat.user.User;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -11,6 +12,11 @@ import java.util.List;
 import java.util.Set;
 
 public class CheckManager {
+    private final ACConfig acConfig;
+
+    public CheckManager(ACConfig acConfig) {
+        this.acConfig = acConfig;
+    }
 
     @Getter
     public final List<Class<? extends Check>> checkClasses = new ArrayList<>();
@@ -25,7 +31,9 @@ public class CheckManager {
     }
 
     public void registerDefaultChecks() {
-        registerChecksFromPackage("me.athulsib.stomcheat.check.impl");
+        if (acConfig.loadDefaultChecks()) {
+            registerChecksFromPackage("me.athulsib.stomcheat.check.impl");
+        }
     }
 
     public void registerCheck(Class<? extends Check> checkClass) {

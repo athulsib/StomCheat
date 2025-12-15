@@ -1,5 +1,7 @@
 package me.athulsib.stomcheat;
 
+import me.athulsib.stomcheat.config.ACConfig;
+import me.athulsib.stomcheat.config.ConfigLoader;
 import me.athulsib.stomcheat.minestom.MinestomListener;
 import me.athulsib.stomcheat.check.CheckManager;
 import me.athulsib.stomcheat.packet.PacketListener;
@@ -20,6 +22,8 @@ public class StomCheat {
     private static StomCheat instance;
     private CheckManager checkManager;
 
+    private ConfigLoader configLoader;
+    private ACConfig acConfig;
     private StomCheatConfig config;
 
     private final ThreadManager threadManager = new ThreadManager();
@@ -30,6 +34,9 @@ public class StomCheat {
         try {
             instance = this;
 
+            this.configLoader = new ConfigLoader();
+            this.acConfig = this.configLoader.loadConfig();
+
             this.config = new StomCheatConfig();
 
             new PacketListener();
@@ -37,7 +44,7 @@ public class StomCheat {
             //Register listener for join and quit events.
             new MinestomListener();
 
-            this.checkManager = new CheckManager();
+            this.checkManager = new CheckManager(acConfig);
 
             //TODO make this configurable
             //Load the checks separate from the player to make it more accessible

@@ -3,6 +3,7 @@ package me.athulsib.stomcheat.check.impl.movement.speed;
 
 import me.athulsib.stomcheat.check.Check;
 import me.athulsib.stomcheat.check.CheckData;
+import me.athulsib.stomcheat.processor.impl.MovementProcessor;
 import me.athulsib.stomcheat.utils.PacketUtil;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.player.PlayerPacketEvent;
@@ -35,11 +36,13 @@ public class SpeedA extends Check {
                     return;
                 }
 
-                boolean ground = getUser().getMovementProcessor().getTo().isOnGround();
-                boolean lastGround = getUser().getMovementProcessor().getFrom().isOnGround();
+                MovementProcessor movementProcessor = (MovementProcessor) getUser().getProcessor("movement_processor");
 
-                double deltaXZ = getUser().getMovementProcessor().getDeltaXZ();
-                double lastDeltaXZ = getUser().getMovementProcessor().getLastDeltaXZ();
+                boolean ground = movementProcessor.getTo().isOnGround();
+                boolean lastGround = movementProcessor.getFrom().isOnGround();
+
+                double deltaXZ = movementProcessor.getDeltaXZ();
+                double lastDeltaXZ = movementProcessor.getLastDeltaXZ();
 
                 double previousPredicted = (lastDeltaXZ * 0.91F) + 0.026F;
 

@@ -28,7 +28,6 @@ public abstract class Check extends Event {
         if (getClass().isAnnotationPresent(CheckData.class)) {
             this.data = getClass().getAnnotation(CheckData.class);
 
-
             this.punishmentVL = this.data.punishmentVL();
             this.checkName = this.data.name();
             this.checkType = this.data.type();

@@ -2,6 +2,7 @@ package me.athulsib.stomcheat.check.impl.misc;
 
 import me.athulsib.stomcheat.check.Check;
 import me.athulsib.stomcheat.check.CheckData;
+import me.athulsib.stomcheat.processor.impl.MovementProcessor;
 import me.athulsib.stomcheat.utils.PacketUtil;
 import me.athulsib.stomcheat.utils.math.MathUtil;
 import net.minestom.server.coordinate.Point;
@@ -59,8 +60,10 @@ public class ScaffoldB extends Check {
             case CLIENT_POSITION_LOOK:
                 this.exemptTeleportTicks -= Math.min(this.exemptTeleportTicks, 1);
                 if (collectingRotations) {
-                    double deltaPitch = getUser().getMovementProcessor().getDeltaPitchAbs();
-                    double deltaYaw = getUser().getMovementProcessor().getDeltaYawAbs();
+                    MovementProcessor movementProcessor = (MovementProcessor) getUser().getProcessor("movement_processor");
+
+                    double deltaPitch = movementProcessor.getDeltaPitchAbs();
+                    double deltaYaw = movementProcessor.getDeltaYawAbs();
 
                     // Only add non-zero rotations
                     if (deltaPitch > 0.001) pitchRotations.add(deltaPitch);

@@ -3,6 +3,7 @@ package me.athulsib.stomcheat.check.impl.other.badpackets;
 
 import me.athulsib.stomcheat.check.Check;
 import me.athulsib.stomcheat.check.CheckData;
+import me.athulsib.stomcheat.processor.impl.MovementProcessor;
 import me.athulsib.stomcheat.utils.PacketUtil;
 import net.minestom.server.event.player.PlayerPacketEvent;
 
@@ -20,8 +21,9 @@ public class BadPacketsA extends Check {
             case CLIENT_LOOK:
             case CLIENT_POSITION:
             case CLIENT_POSITION_LOOK: {
+                MovementProcessor movementProcessor = (MovementProcessor) getUser().getProcessor("movement_processor");
 
-                double pitch = Math.abs(getUser().getMovementProcessor().getTo().getPitch());
+                double pitch = Math.abs(movementProcessor.getTo().getPitch());
 
                 if (pitch > 90.0) {
                     this.fail("Impossible pitch rotation",

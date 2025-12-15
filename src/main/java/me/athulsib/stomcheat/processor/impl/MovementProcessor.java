@@ -1,20 +1,26 @@
-package me.athulsib.stomcheat.process;
+package me.athulsib.stomcheat.processor.impl;
 
-
-import me.athulsib.stomcheat.event.Event;
-import me.athulsib.stomcheat.user.User;
-import me.athulsib.stomcheat.wrapper.FlyingWrapper;
-import me.athulsib.stomcheat.utils.PacketUtil;
-import me.athulsib.stomcheat.utils.location.FlyingLocation;
 import lombok.Getter;
 import lombok.Setter;
+import me.athulsib.stomcheat.processor.Processor;
+import me.athulsib.stomcheat.processor.ProcessorData;
+import me.athulsib.stomcheat.processor.ProcessorType;
+import me.athulsib.stomcheat.user.User;
+import me.athulsib.stomcheat.utils.PacketUtil;
+import me.athulsib.stomcheat.utils.location.FlyingLocation;
+import me.athulsib.stomcheat.wrapper.FlyingWrapper;
 import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.network.packet.client.play.ClientEntityActionPacket;
 
 @Getter
 @Setter
 
-public class MovementProcessor extends Event {
+@ProcessorData(
+        name = "movement_processor",
+        priority = 0,
+        type = ProcessorType.DEFAULT
+)
+public class MovementProcessor extends Processor {
 
     private final User data;
     private FlyingLocation to = new FlyingLocation();
@@ -31,6 +37,7 @@ public class MovementProcessor extends Event {
     private int tick, sprintTicks;
 
     public MovementProcessor(User user) {
+        super(user);
         this.data = user;
     }
 

@@ -5,6 +5,7 @@ import me.athulsib.stomcheat.config.ConfigLoader;
 import me.athulsib.stomcheat.minestom.MinestomListener;
 import me.athulsib.stomcheat.check.CheckManager;
 import me.athulsib.stomcheat.packet.PacketListener;
+import me.athulsib.stomcheat.processor.ProcessorManager;
 import me.athulsib.stomcheat.thread.ThreadManager;
 import me.athulsib.stomcheat.user.UserManager;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class StomCheat {
 
     @Getter
     private static StomCheat instance;
+    private ProcessorManager processorManager;
     private CheckManager checkManager;
 
     private ConfigLoader configLoader;
@@ -44,7 +46,15 @@ public class StomCheat {
             //Register listener for join and quit events.
             new MinestomListener();
 
+            this.processorManager = new ProcessorManager();
             this.checkManager = new CheckManager();
+
+            this.processorManager.registerDefaultProcessors();
+
+            System.out.println(processorManager.getProcessorEntries().size());
+            processorManager.getProcessorEntries().forEach(p -> {
+                System.out.println(p.getProcessorClass().getSimpleName() + " | " + p.getPriority());
+            });
 
             //Load the checks separate from the player to make it more accessible
             this.checkManager.registerDefaultChecks();

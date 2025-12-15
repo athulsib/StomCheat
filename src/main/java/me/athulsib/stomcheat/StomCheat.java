@@ -44,7 +44,7 @@ public class StomCheat {
             //Register listener for join and quit events.
             new MinestomListener();
 
-            this.checkManager = new CheckManager(acConfig);
+            this.checkManager = new CheckManager();
 
             //Load the checks separate from the player to make it more accessible
             this.checkManager.registerDefaultChecks();

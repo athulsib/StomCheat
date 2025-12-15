@@ -46,7 +46,6 @@ public class StomCheat {
 
             this.checkManager = new CheckManager(acConfig);
 
-            //TODO make this configurable
             //Load the checks separate from the player to make it more accessible
             this.checkManager.registerDefaultChecks();
 

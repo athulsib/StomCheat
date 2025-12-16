@@ -54,8 +54,6 @@ public class StomCheat {
             //Load the checks separate from the player to make it more accessible
             this.checkManager.registerDefaultChecks();
 
-            instance.getProcessorManager().registerProcessorsFromPackage();
-
             //TODO Add more commands
             // Register commands
             MinecraftServer.getCommandManager().register(new ACInfoCommand());

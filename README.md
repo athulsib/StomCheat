@@ -65,6 +65,45 @@ public class BadPacketsA extends Check {
 }
 ```
 
+## Creating Processors
+To create a processor, simply create a class that extends `Processor` and annotate it with `@ProcessorData`. Then override the `onPacket` method to handle incoming or outgoing packets.
+After you've created your processor, make sure to register it with the `ProcessorManager` like so:
+
+```java
+StomCheat stomCheat = /*your stomcheat insance*/
+
+// method A, register a check by its class  
+stomCheat.getProcessorManager().registerProcessor(CustomProcessor.class); // register the proccessor class
+// method B, register all checks from a package
+stomCheat.getProcessorManager().registerProcessorsFromPackage("com.example.ac.processors.impl"); // register all processors from a package
+```
+
+Here is an example of a processor:
+```java
+@ProcessorData(
+        name = "example_processor",
+        priority = 0, //the execution priority of the processor, 0 is the highest priority and will be executed first
+        type = ProcessorType.CUSTOM //it is important to set the type to custom, otherwise there might be conflicts with existing Processors
+)
+public class ExampleProcessor extends Processor {
+    
+    public ExampleProcessor(User user) {
+        super(user);
+    }
+
+    @Override
+    public void onPacket(PlayerPacketEvent event) {
+        switch (PacketUtil.toPacketReceive(event)) {
+            case CLIENT_POSITION:
+            case CLIENT_LOOK:
+            case CLIENT_POSITION_LOOK: 
+            case CLIENT_ENTITY_ACTION:
+        }
+    }
+
+}
+```
+
 ## "Configuration" System
 This is a very simple project to help you create your own anticheat, so it does not include a real file based configuration system.
 However, variables are stored in `StomCheatConfig` class, which you can just modify. 

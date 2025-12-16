@@ -51,11 +51,6 @@ public class StomCheat {
 
             this.processorManager.registerDefaultProcessors();
 
-            System.out.println(processorManager.getProcessorEntries().size());
-            processorManager.getProcessorEntries().forEach(p -> {
-                System.out.println(p.getProcessorClass().getSimpleName() + " | " + p.getPriority());
-            });
-
             //Load the checks separate from the player to make it more accessible
             this.checkManager.registerDefaultChecks();
 

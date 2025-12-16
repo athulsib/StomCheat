@@ -16,7 +16,7 @@ public class ProcessorManager {
     @Getter
     private final List<ProcessorEntry> processorEntries = new ArrayList<>();
 
-    private void registerProcessorsFromPackage(String packageName) {
+    public void registerProcessorsFromPackage(String packageName) {
         Reflections reflections = new Reflections(new ConfigurationBuilder()
                 .forPackage(packageName)
                 .filterInputsBy(new FilterBuilder().includePackage(packageName))

@@ -8,12 +8,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-//TODO: rename config.json to stomcheat_config.json / provide a way to change the name to avoid any conflicts with existing configs in other projects
 public class ConfigLoader {
     private final Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 
     public Config loadConfig() {
-        File file = new File("config.json");
+        File file = new File("stomcheat_config.json");
         if (!file.exists()) {
             return createConfig();
         }
@@ -21,7 +20,7 @@ public class ConfigLoader {
         try(FileReader fileReader = new FileReader(file);) {
             return gson.fromJson(fileReader, Config.class);
         } catch (IOException exception) {
-            throw new RuntimeException("Could read config.json", exception);
+            throw new RuntimeException("Could read stomcheat_config.json", exception);
         }
     }
 
@@ -55,10 +54,10 @@ public class ConfigLoader {
                 """
         );
 
-        try (FileWriter fileWriter = new FileWriter("config.json")) {
+        try (FileWriter fileWriter = new FileWriter("stomcheat_config.json")) {
             gson.toJson(config, fileWriter);
         } catch (IOException exception) {
-            throw new RuntimeException("Could not write config.json", exception);
+            throw new RuntimeException("Could not write stomcheat_config.json", exception);
         }
         return config;
     }

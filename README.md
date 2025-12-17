@@ -119,6 +119,31 @@ The Anticheat creates a ```stomcheat_config.json``` where you can adjust the fol
 }
 ```
 
+## Extensions System
+To create an extension, simply create a class that extends `StomCheatExtension` and annotate it with `@ExtensionData`. Then override the `init` method.
+After you've created your extension, make sure to register it with the `ExtensionManager` like so:
+
+```java
+StomCheat stomCheat = /*your stomcheat insance*/
+stomCheat.enable();
+stomCheat.getExtensionManager().loadExtensions(new ExampleExtension(), ...)
+```
+
+```java
+@ExtensionData(
+        name = "Test Extension",
+        author = "Example Author",
+        version = "0.0.1"
+)
+public class TestExtension implements StomCheatExtension {
+    
+    @Override
+    public void init(StomCheat stomCheat) {
+        //your logic here
+    }
+    
+}
+```
 
 ### Credits
 Based on Serpent base by demondxv

@@ -9,10 +9,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerPacketEvent;
 import net.minestom.server.event.player.PlayerPacketOutEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -25,6 +22,7 @@ public class User {
 
     private final List<Check> checks;
     private List<Processor> processors;
+    private Map<String, Processor> processorMap;
 
     // Assigned execution thread for this user
     private Thread thread;
@@ -60,9 +58,8 @@ public class User {
     }
 
     public Processor getProcessor(String name) {
-        return processors.stream()
-                .filter(o -> o.getName().equals(name))
-                .findFirst()
+        return Optional
+                .ofNullable(processorMap.get(name))
                 .orElseThrow(() -> new NoSuchElementException("Processor " + name + " not found!"));
     }
 }

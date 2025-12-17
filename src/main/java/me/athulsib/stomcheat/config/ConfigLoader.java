@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+//TODO: rename config.json to stomcheat_config.json / provide a way to change the name to avoid any conflicts with existing configs in other projects
 public class ConfigLoader {
     private final Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 

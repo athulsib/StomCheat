@@ -6,11 +6,10 @@ import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
 
+import java.util.*;
+
+//TODO: Custom Processor with no priority
 public class ProcessorManager {
 
     @Getter
@@ -65,11 +64,15 @@ public class ProcessorManager {
         user.getProcessors().clear();
 
         List<Processor> processors = new ArrayList<>();
+        Map<String, Processor> processorMap = new HashMap<>();
         processorEntries.forEach(entry -> {
-            processors.add(entry.instantiateProcessor(user));
+            Processor processor = entry.instantiateProcessor(user);
+            processors.add(processor);
+            processorMap.put(processor.getName(), processor);
         });
 
         user.setProcessors(processors);
+        user.setProcessorMap(processorMap);
     }
 
     private void sortProcessorsByPriority() {

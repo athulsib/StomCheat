@@ -1,7 +1,9 @@
 package me.athulsib.stomcheat;
 
+import me.athulsib.stomcheat.commands.ACExtensionInfoCommand;
 import me.athulsib.stomcheat.config.Config;
 import me.athulsib.stomcheat.config.ConfigLoader;
+import me.athulsib.stomcheat.extension.ExtensionManager;
 import me.athulsib.stomcheat.minestom.MinestomListener;
 import me.athulsib.stomcheat.check.CheckManager;
 import me.athulsib.stomcheat.packet.PacketListener;
@@ -26,6 +28,8 @@ public class StomCheat {
 
     private ConfigLoader configLoader;
     private Config config;
+
+    private ExtensionManager extensionManager;
 
     private final ThreadManager threadManager = new ThreadManager();
     private final UserManager userManager = new UserManager();
@@ -54,17 +58,18 @@ public class StomCheat {
             //TODO Add more commands
             // Register commands
             MinecraftServer.getCommandManager().register(new ACInfoCommand());
+            MinecraftServer.getCommandManager().register(new ACExtensionInfoCommand());
 
             //Reset all check violation over time
             this.checkService.scheduleAtFixedRate(() -> getUserManager().getUserMap().forEach((uuid, user) ->
                             user.getChecks().forEach(check -> check.setViolations(0))),
                     1L, 10L, TimeUnit.MINUTES);
 
+            this.extensionManager = new ExtensionManager();
         }catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     public void disable() {
         this.checkService.shutdown();

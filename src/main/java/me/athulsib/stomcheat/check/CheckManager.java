@@ -27,7 +27,7 @@ public class CheckManager {
 
     public void registerDefaultChecks() {
         StomCheat stomCheat = StomCheat.getInstance();
-        if (stomCheat.getAcConfig().loadDefaultChecks()) {
+        if (stomCheat.getConfig().loadDefaultChecks()) {
             registerChecksFromPackage("me.athulsib.stomcheat.check.impl");
         }
     }

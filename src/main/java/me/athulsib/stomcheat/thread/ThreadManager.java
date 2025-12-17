@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 @Getter
 public class ThreadManager {
     private final int threads = StomCheat.getInstance() != null && StomCheat.getInstance().getConfig() != null
-            ? StomCheat.getInstance().getConfig().getThreadCount()
+            ? StomCheat.getInstance().getConfig().threadCount()
             : Math.min(Runtime.getRuntime().availableProcessors(), 16);
     private final List<Thread> userThreads = new CopyOnWriteArrayList<>();
     private final Map<User, Thread> playerThreadMap = new ConcurrentHashMap<>();

@@ -47,15 +47,15 @@ public abstract class Check extends Event {
 
         int ping = this.user.getPlayer().getLatency();
 
-        String alert = StomCheat.getInstance().getConfig().getAlert()
+        String alert = StomCheat.getInstance().getConfig().alertMessage()
                 .replace("%player%", this.user.getUserName())
                 .replace("%check%", this.checkName)
                 .replace("%type%", this.checkType)
                 .replace("%vl%", String.valueOf(this.violations))
                 .replace("%punishvl%", String.valueOf(this.punishmentVL))
-                .replace("%experimental%", this.experimental ? StomCheat.getInstance().getConfig().getExperimental() : " ");
+                .replace("%experimental%", this.experimental ? StomCheat.getInstance().getConfig().experimental() : " ");
 
-        String hoverTemplate = StomCheat.getInstance().getConfig().getHover()
+        String hoverTemplate = StomCheat.getInstance().getConfig().hover()
                 .replace("%check%", this.checkName)
                 .replace("%type%", this.checkType)
                 .replace("%vl%", String.valueOf(this.violations))
@@ -82,8 +82,8 @@ public abstract class Check extends Event {
     }
 
     public void punish() {
-        String broadcast = StomCheat.getInstance().getConfig().getBroadcast();
-        String kickMessage = StomCheat.getInstance().getConfig().getPunishKick();
+        String broadcast = StomCheat.getInstance().getConfig().broadcast();
+        String kickMessage = StomCheat.getInstance().getConfig().kickMessage();
 
 
        // getUser().getPlayer().kick(LegacyComponentSerializer.legacyAmpersand().deserialize(kickMessage));

@@ -1,6 +1,6 @@
 package me.athulsib.stomcheat;
 
-import me.athulsib.stomcheat.config.ACConfig;
+import me.athulsib.stomcheat.config.Config;
 import me.athulsib.stomcheat.config.ConfigLoader;
 import me.athulsib.stomcheat.minestom.MinestomListener;
 import me.athulsib.stomcheat.check.CheckManager;
@@ -25,8 +25,7 @@ public class StomCheat {
     private CheckManager checkManager;
 
     private ConfigLoader configLoader;
-    private ACConfig acConfig;
-    private StomCheatConfig config;
+    private Config config;
 
     private final ThreadManager threadManager = new ThreadManager();
     private final UserManager userManager = new UserManager();
@@ -37,9 +36,7 @@ public class StomCheat {
             instance = this;
 
             this.configLoader = new ConfigLoader();
-            this.acConfig = this.configLoader.loadConfig();
-
-            this.config = new StomCheatConfig();
+            this.config = this.configLoader.loadConfig();
 
             new PacketListener();
 

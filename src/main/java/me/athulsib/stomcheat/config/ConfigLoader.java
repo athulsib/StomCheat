@@ -9,23 +9,50 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class ConfigLoader {
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 
-    public ACConfig loadConfig() {
+    public Config loadConfig() {
         File file = new File("config.json");
         if (!file.exists()) {
             return createConfig();
         }
 
         try(FileReader fileReader = new FileReader(file);) {
-            return gson.fromJson(fileReader, ACConfig.class);
+            return gson.fromJson(fileReader, Config.class);
         } catch (IOException exception) {
             throw new RuntimeException("Could read config.json", exception);
         }
     }
 
-    private ACConfig createConfig() {
-        ACConfig config = new ACConfig(true);
+    private Config createConfig() {
+        Config config = new Config(
+                true,
+                true,
+                Math.min(Runtime.getRuntime().availableProcessors(), 16),
+                "&6&lStomCheat &7&o>> &6%player% &fhas failed &6%check% %type% &8[VL:&r%vl%&7/%punishvl%&8] %experimental%",
+                "&c(DEV)",
+                """
+                &6Details:
+                &eCheck: &a%check%
+                &eType: &a%type%
+                &eViolations: &a%vl%
+                &ePing: &a%ping%ms
+                &eDescription: &a%description%
+                &eData: &a%data%
+                """,
+                """
+                
+                &6&lStomCheat &8>> &e%s &bhas been removed from the Network
+                &eReason: &cUnfair Advantage
+                
+                """,
+                """
+                
+                &cYou have been removed from the Network
+                &c[StomCheat] Unfair Advantage
+                
+                """
+        );
 
         try (FileWriter fileWriter = new FileWriter("config.json")) {
             gson.toJson(config, fileWriter);

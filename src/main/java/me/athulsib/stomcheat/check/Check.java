@@ -71,10 +71,8 @@ public abstract class Check extends Event {
                 .replaceText(builder -> builder.matchLiteral(String.valueOf(this.violations)).replacement(Component.text(String.valueOf(this.violations)).color(getViolationColor())))
                 .replaceText(builder -> builder.matchLiteral(String.valueOf(this.punishmentVL)).replacement(Component.text(String.valueOf(this.punishmentVL)).color(getViolationColor())));
 
-        // TODO: Alert system for staff only
-        StomCheat.getInstance().getUserManager().getUserMap().values().forEach(user -> {
-            user.getPlayer().sendMessage(message);
-        });
+        // Send alerta via alert manager implementation
+        StomCheat.getInstance().getAlertManager().sendStaffAlert(message);
 
         if (this.violations >= this.punishmentVL) {
             punish();

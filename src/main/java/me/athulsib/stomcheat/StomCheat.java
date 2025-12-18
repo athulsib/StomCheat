@@ -1,5 +1,8 @@
 package me.athulsib.stomcheat;
 
+import lombok.Setter;
+import me.athulsib.stomcheat.alert.AlertManager;
+import me.athulsib.stomcheat.alert.SCAlertManager;
 import me.athulsib.stomcheat.commands.ACExtensionInfoCommand;
 import me.athulsib.stomcheat.config.Config;
 import me.athulsib.stomcheat.config.ConfigLoader;
@@ -23,9 +26,10 @@ public class StomCheat {
 
     @Getter
     private static StomCheat instance;
+    @Setter
+    private AlertManager alertManager;
     private ProcessorManager processorManager;
     private CheckManager checkManager;
-
     private ConfigLoader configLoader;
     private Config config;
 
@@ -47,6 +51,7 @@ public class StomCheat {
             //Register listener for join and quit events.
             new MinestomListener();
 
+            this.alertManager = new SCAlertManager();
             this.processorManager = new ProcessorManager();
             this.checkManager = new CheckManager();
 
